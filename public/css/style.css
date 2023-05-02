@@ -91,6 +91,10 @@
   }
 }
 
+.hide-button {
+  visibility: hidden;
+}
+
 body {
   margin: 0;
   font-family: var(--bs-body-font-family);
