@@ -15,7 +15,7 @@ const signUpHandler = async (event) => {
 
         console.log(response)
         if(response.ok) {
-            document.location.replace('/') //change later to dashboard
+            document.location.replace('/dashboard');
         } else {
             alert(response.statusText);
         }
