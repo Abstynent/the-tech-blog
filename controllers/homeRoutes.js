@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
         });
 
         const posts = postData.map((post) => post.get({ plain: true }));
-
+        console.log(posts)
         res.render('homepage', {
             posts
         });
@@ -24,26 +24,35 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/post/:id', withAuth, async (req, res) => {
-    try {
-        const postData = await Post.findByPk(req.params.id, {
-            include: [
-                {
+    Post.findOne({
+        where: {
+            id: req.params.id,
+        },
+        include: [
+            {
+                model: Comment,
+                include: {
                     model: User,
-                    attributes: ['id', 'name'],
-                },
-            ]
-        });
+                    attributes: ["name"]
+                }
+            },
+            {
+                model: User,
+                attributes: ["id", "name"]
+            }
+        ]
+    })
+    .then(data => {
+        if(!data) {
+            res.status(404).json({ message: "A post with this ID could not be found."});
+            return;
+        };
 
-        const post = postData.get({ plain: true });
-        console.log(post);
-
-        res.render('post', {
-            post,
-            logged_in: req.session.logged_in,
-        });
-    } catch (error) {
-        res.status(500).json(error);
-    }
+        const post = data.get({ plain: true });
+        console.log(post.comments)
+        res.render("post", { post, logged_in: req.session.logged_in });
+    })
+    .catch( err => res.status(500).json(err));
 });
 
 router.get('/dashboard', withAuth, (req,res) => {
@@ -59,6 +68,11 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/sign-up', (req, res) => {
+    if(req.session.logged_in) {
+        res.redirect('/');
+        return;
+    }
+
     res.render('sign-up')
 });
 
