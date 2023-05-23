@@ -1,0 +1,43 @@
+<div class="container">
+
+ <div class="row">
+  <div>
+   
+      <a class="nav-link" href="/"><i class="fa-solid fa-arrow-left"></i></a>
+      
+  </div>
+    <div class="col-sm-9 mx-auto">
+      <div class="post-preview">
+        {{#each post.comments as |comment|}}
+            <h5>{{comment.user.name}}</h5> 
+            <p class="post-meta">{{format_date comment.date_created}} @ {{format_time comment.date_created}}</p>
+          <div class="comment-text">
+            {{comment.content}}
+          </div>
+        <hr>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-9 mx-auto mb-2">
+      <div class="card">
+        <div class="card-header">
+          <h5>Add Comment</h5>
+        </div>
+        <div class="card-body">
+          <form id="comment-form">
+            <div class="mb-3">
+              <textarea id="comment-textarea" class="form-control" rows="3" placeholder="Add your comment"></textarea>
+            </div>
+            <div class="pt-3 mb-3">
+              <button class="btn btn-primary submit-btn" id="confirm" type="submit">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
