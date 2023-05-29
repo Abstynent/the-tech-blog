@@ -11,4 +11,9 @@ const logout = async () => {
   }
 };
 
+if(window.location.pathname == '/dashboard') { 
+  const addPostBtn = document.getElementById('add-post-btn');
+  addPostBtn.classList.remove('hide-button')
+}
+
   
