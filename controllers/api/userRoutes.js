@@ -43,6 +43,7 @@ router.post('/login', async (req, res) => {
             res.json({ user: userData, message: "You are logged in!"});
         })
     } catch (error) {
+        alert("Incorrect email or password, please try again.")
         res.status(400).json(err);
     }
 });
