@@ -56,8 +56,26 @@ router.get('/post/:id', withAuth, async (req, res) => {
 });
 
 router.get('/dashboard', withAuth, (req,res) => {
-    res.render('dashboard');
-})
+    Post.findAll({
+        where: {
+            user_id: req.session.user_id,
+        }
+    }).then(postData => {
+        if(!postData) {
+            console.log("no posts")
+            res.status(404).json({ message: "No post assigned to this user."});
+            return;
+        };
+
+        const posts = postData.map((post) => post.get({ plain: true }));
+        res.render('dashboard', {
+            posts,
+            logged_in: req.session.logged_in,
+            user_id: req.session.user_id,
+        })
+    }).catch(error => res.status(500).json(error))
+});
+
 router.get('/login', (req, res) => {
     if(req.session.logged_in) {
         res.redirect('/');
