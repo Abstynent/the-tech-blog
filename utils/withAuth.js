@@ -1,9 +1,15 @@
+// Middleware function for authentication
 const withAuth = (req, res, next) => {
-    if(!req.session.logged_in) {
-        res.redirect('/login');
+    // Check if the user is logged in based on the 'logged_in' property in the session
+    if (!req.session.logged_in) {
+      // If not logged in, redirect the user to the login page
+      res.redirect('/login');
     } else {
-        next();
+      // If logged in, continue to the next middleware or route handler
+      next();
     }
-};
-
-module.exports = withAuth;
+  };
+  
+  // Export the 'withAuth' middleware function
+  module.exports = withAuth;
+  
