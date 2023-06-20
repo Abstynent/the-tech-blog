@@ -23,6 +23,10 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/add-post', withAuth, (req, res) => {
+    res.render('add-post');
+})
+
 router.get('/post/:id', withAuth, async (req, res) => {
     Post.findOne({
         where: {
