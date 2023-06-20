@@ -7,7 +7,8 @@ const logout = async () => {
   if (response.ok) {
     document.location.replace('/');
   } else {
-    alert(response.statusText);
+    alert("You must login first.");
+    console.log(response.statusText);
   }
 };
 
