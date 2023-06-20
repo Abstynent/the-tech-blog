@@ -16,7 +16,7 @@ const editPostFormHandler = async (event) => {
     const post_content = document.querySelector('#current-post-textarea').value.trim();
 
     if(post_id && post_title && post_content) {
-        const response = await fetch(`/api/post/${post_id}`, {
+        const response = await fetch(`./api/post/${post_id}`, {
             method: 'PUT',
             body: JSON.stringify({ post_id, post_title, post_content }),
             headers: {'Content-Type': 'application/json'},
@@ -51,3 +51,5 @@ const deletePostHandler = async (event) => {
         alert(response.statusText);
     }
 }
+
+document.querySelector('.edit-post-form').addEventListener('submit', editPostFormHandler);
